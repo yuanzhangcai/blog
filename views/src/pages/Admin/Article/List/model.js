@@ -2,7 +2,7 @@ import { message } from 'antd';
 import { fakeListForm } from './service';
 
 const Model = {
-  namespace: 'adminAndArticleAndAdd',
+  namespace: 'adminAndArticleAndList',
   state: {},
   effects: {
     *fakeListForm({ payload }, { call }) {

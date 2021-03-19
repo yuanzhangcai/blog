@@ -41,7 +41,7 @@ const submitFormLayout = {
   },
 };
 
-class Add extends Component {
+class List extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
     // dispatch({
@@ -52,7 +52,7 @@ class Add extends Component {
   onFinish = (values) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'adminAndArticleAndAdd/fakeListForm',
+      type: 'adminAndArticleAndList/fakeListForm',
       payload: values,
     });
   };
@@ -137,5 +137,5 @@ class Add extends Component {
 }
 
 export default connect(({ loading }) => ({
-  loading: loading.effects['adminAndArticleAndAdd/fakeListForm'],
-}))(Add);
+  loading: loading.effects['adminAndArticleAndList/fakeListForm'],
+}))(List);

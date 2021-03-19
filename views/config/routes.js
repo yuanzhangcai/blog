@@ -43,7 +43,13 @@ export default [
                     redirect: '/admin/article/add',
                   },
                   {
-                    name: '基础表单',
+                    name: '列表',
+                    icon: 'smile',
+                    path: '/admin/article/list',
+                    component: './Admin/Article/List',
+                  },
+                  {
+                    name: '添加',
                     icon: 'smile',
                     path: '/admin/article/add',
                     component: './Admin/Article/Add',
