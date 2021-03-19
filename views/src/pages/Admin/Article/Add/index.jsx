@@ -4,6 +4,11 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { connect } from 'umi';
 import styles from './index.less';
 
+// 引入编辑器组件
+import BraftEditor from 'braft-editor'
+// 引入编辑器样式
+import 'braft-editor/dist/index.css'
+
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
@@ -42,15 +47,26 @@ const submitFormLayout = {
 };
 
 class Add extends Component {
+  formRef = React.createRef();
   componentDidMount() {
     const { dispatch } = this.props;
     // dispatch({
     //   type: 'accountAndcenter/fetch',
     // });
+    this.setState({
+      editorState: BraftEditor.createEditorState("test")
+    })
   }
 
   onFinish = (values) => {
     const { dispatch } = this.props;
+    // this.formRef.current.setFieldsValue({
+    //   goal: 'Hi, man!',
+    // });
+    values.context = this.state.editorState.toHTML()
+    alert(JSON.stringify(values))
+
+
     dispatch({
       type: 'adminAndArticleAndAdd/fakeListForm',
       payload: values,
@@ -66,13 +82,41 @@ class Add extends Component {
     if (publicType) setShowPublicUsers(publicType === '2');
   };
 
+
+  state = {
+    // 创建一个空的editorState作为初始值
+    editorState: BraftEditor.createEditorState(null)
+  }
+
+  // async componentDidMount() {
+  //   // 假设此处从服务端获取html格式的编辑器内容
+  //   const htmlContent = await fetchEditorContent()
+  //   // 使用BraftEditor.createEditorState将html字符串转换为编辑器需要的editorStat
+  //   this.setState({
+  //     editorState: BraftEditor.createEditorState(htmlContent)
+  //   })
+  // }
+
+  submitContent = async () => {
+    // 在编辑器获得焦点时按下ctrl+s会执行此方法
+    // 编辑器内容提交到服务端之前，可直接调用editorState.toHTML()来获取HTML格式的内容
+    const htmlContent = this.state.editorState.toHTML()
+    const result = await saveEditorContent(htmlContent)
+  }
+
+  handleEditorChange = (editorState) => {
+    this.setState({ editorState })
+  }
+
   render() {
-    const {_, loading} = this.props;
+    const { _, loading } = this.props;
+    const { editorState } = this.state
     return (
       <PageContainer
->
+      >
         <Card bordered={false}>
           <Form
+            ref={this.formRef}
             hideRequiredMark
             style={{
               marginTop: 8,
@@ -106,18 +150,25 @@ class Add extends Component {
               name="goal"
               rules={[
                 {
-                  required: true,
+                  required: false,
                   message: "请输入内容",
                 },
               ]}
             >
-              <TextArea
+              {/* <TextArea
                 style={{
                   minHeight: 32,
                 }}
                 placeholder={"请输入内容"}
                 rows={4}
-              />
+              /> */}
+              <div className="my-component">
+                <BraftEditor
+                    value={editorState}
+                    onChange={this.handleEditorChange}
+                    onSave={this.submitContent}
+                />
+            </div>
             </FormItem>
             <FormItem
               {...submitFormLayout}
@@ -127,7 +178,7 @@ class Add extends Component {
             >
               <Button type="primary" htmlType="submit" loading={loading}>
                 提交
-            </Button>
+              </Button>
             </FormItem>
           </Form>
         </Card>
