@@ -85,60 +85,27 @@ const Add = (props) => {
         >
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="adminandarticleandadd.title.label" />}
+            label={"标题"}
             name="title"
             rules={[
               {
                 required: true,
-                message: formatMessage({
-                  id: 'adminandarticleandadd.title.required',
-                }),
+                message: "请输入标题！",
               },
             ]}
           >
             <Input
-              placeholder={formatMessage({
-                id: 'adminandarticleandadd.title.placeholder',
-              })}
+              placeholder={"请输入标题"}
             />
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="adminandarticleandadd.date.label" />}
-            name="date"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({
-                  id: 'adminandarticleandadd.date.required',
-                }),
-              },
-            ]}
-          >
-            <RangePicker
-              style={{
-                width: '100%',
-              }}
-              placeholder={[
-                formatMessage({
-                  id: 'adminandarticleandadd.placeholder.start',
-                }),
-                formatMessage({
-                  id: 'adminandarticleandadd.placeholder.end',
-                }),
-              ]}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="adminandarticleandadd.goal.label" />}
+            label={"内容"}
             name="goal"
             rules={[
               {
                 required: true,
-                message: formatMessage({
-                  id: 'adminandarticleandadd.goal.required',
-                }),
+                message: "请输入内容",
               },
             ]}
           >
@@ -146,145 +113,9 @@ const Add = (props) => {
               style={{
                 minHeight: 32,
               }}
-              placeholder={formatMessage({
-                id: 'adminandarticleandadd.goal.placeholder',
-              })}
+              placeholder={"请输入内容"}
               rows={4}
             />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="adminandarticleandadd.standard.label" />}
-            name="standard"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({
-                  id: 'adminandarticleandadd.standard.required',
-                }),
-              },
-            ]}
-          >
-            <TextArea
-              style={{
-                minHeight: 32,
-              }}
-              placeholder={formatMessage({
-                id: 'adminandarticleandadd.standard.placeholder',
-              })}
-              rows={4}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="adminandarticleandadd.client.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="adminandarticleandadd.form.optional" />
-                  <Tooltip title={<FormattedMessage id="adminandarticleandadd.label.tooltip" />}>
-                    <InfoCircleOutlined
-                      style={{
-                        marginRight: 4,
-                      }}
-                    />
-                  </Tooltip>
-                </em>
-              </span>
-            }
-            name="client"
-          >
-            <Input
-              placeholder={formatMessage({
-                id: 'adminandarticleandadd.client.placeholder',
-              })}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="adminandarticleandadd.invites.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="adminandarticleandadd.form.optional" />
-                </em>
-              </span>
-            }
-            name="invites"
-          >
-            <Input
-              placeholder={formatMessage({
-                id: 'adminandarticleandadd.invites.placeholder',
-              })}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="adminandarticleandadd.weight.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="adminandarticleandadd.form.optional" />
-                </em>
-              </span>
-            }
-            name="weight"
-          >
-            <InputNumber
-              placeholder={formatMessage({
-                id: 'adminandarticleandadd.weight.placeholder',
-              })}
-              min={0}
-              max={100}
-            />
-            <span className="ant-form-text">%</span>
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="adminandarticleandadd.public.label" />}
-            help={<FormattedMessage id="adminandarticleandadd.label.help" />}
-            name="publicType"
-          >
-            <div>
-              <Radio.Group>
-                <Radio value="1">
-                  <FormattedMessage id="adminandarticleandadd.radio.public" />
-                </Radio>
-                <Radio value="2">
-                  <FormattedMessage id="adminandarticleandadd.radio.partially-public" />
-                </Radio>
-                <Radio value="3">
-                  <FormattedMessage id="adminandarticleandadd.radio.private" />
-                </Radio>
-              </Radio.Group>
-              <FormItem
-                style={{
-                  marginBottom: 0,
-                }}
-                name="publicUsers"
-              >
-                <Select
-                  mode="multiple"
-                  placeholder={formatMessage({
-                    id: 'adminandarticleandadd.publicUsers.placeholder',
-                  })}
-                  style={{
-                    margin: '8px 0',
-                    display: showPublicUsers ? 'block' : 'none',
-                  }}
-                >
-                  <Option value="1">
-                    <FormattedMessage id="adminandarticleandadd.option.A" />
-                  </Option>
-                  <Option value="2">
-                    <FormattedMessage id="adminandarticleandadd.option.B" />
-                  </Option>
-                  <Option value="3">
-                    <FormattedMessage id="adminandarticleandadd.option.C" />
-                  </Option>
-                </Select>
-              </FormItem>
-            </div>
           </FormItem>
           <FormItem
             {...submitFormLayout}
@@ -293,14 +124,7 @@ const Add = (props) => {
             }}
           >
             <Button type="primary" htmlType="submit" loading={submitting}>
-              <FormattedMessage id="adminandarticleandadd.form.submit" />
-            </Button>
-            <Button
-              style={{
-                marginLeft: 8,
-              }}
-            >
-              <FormattedMessage id="adminandarticleandadd.form.save" />
+              提交
             </Button>
           </FormItem>
         </Form>

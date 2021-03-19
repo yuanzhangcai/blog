@@ -50,4 +50,9 @@ export default {
   'menu.editor.mind': 'マインドエディター',
   'menu.editor.koni': 'コニエディター',
   'menu.article': '文章详情',
+  'menu.文章': '文章',
+  'menu.文章.基础表单': '基础表单',
+  'menu.个人中心': '个人中心',
+  'menu.用户': '用户',
+  'menu.评论': '评论',
 };

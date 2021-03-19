@@ -28,7 +28,7 @@ export default [
                 redirect: '/admin/dashboard',
               },
               {
-                name: '首页',
+                name: 'home',
                 icon: 'HomeOutlined',
                 path: '/admin/dashboard',
                 component: './Admin/Dashboard',
