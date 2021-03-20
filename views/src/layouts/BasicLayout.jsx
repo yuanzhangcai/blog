@@ -7,7 +7,7 @@ import ProLayout, { DefaultFooter, GridContent } from '@ant-design/pro-layout';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useIntl, connect, history } from 'umi';
 import { GithubOutlined, HomeOutlined, ContactsOutlined, MailOutlined } from '@ant-design/icons';
-import { Result, Button, Row, Col, Card, Divider, Tag } from 'antd';
+import { Result, Button, Row, Col, Card, Divider, Tag, BackTop } from 'antd';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { getMatchMenu } from '@umijs/route-utils';
@@ -283,6 +283,7 @@ const BasicLayout = (props) => {
           </Row>
         </GridContent>
       </Authorized>
+      <BackTop />
     </ProLayout>
   );
 };

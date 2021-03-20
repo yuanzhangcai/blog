@@ -45,6 +45,7 @@ export async function queryCurrent() {
     },
     address: '西湖区工专路 77 号',
     phone: '0752-268888888',
+    type : 99,
   };
 }
 export async function queryNotices() {

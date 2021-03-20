@@ -21,7 +21,7 @@ class AvatarDropdown extends React.Component {
       return;
     }
 
-    history.push(`/account/${key}`);
+    history.push(`/${key}`);
   };
 
   onLoginClick = () => {
@@ -44,10 +44,10 @@ class AvatarDropdown extends React.Component {
     } = this.props;
     const menuHeaderDropdown = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
-        {menu && (
-          <Menu.Item key="center">
+        {currentUser.type == 99  && (
+          <Menu.Item key="admin">
             <UserOutlined />
-            个人中心
+            管理端
           </Menu.Item>
         )}
         {menu && (
@@ -64,7 +64,7 @@ class AvatarDropdown extends React.Component {
         </Menu.Item>
       </Menu>
     );
-    return !currentUser && currentUser.name ? (
+    return currentUser && currentUser.name ? (
       <HeaderDropdown overlay={menuHeaderDropdown}>
         <span className={`${styles.action} ${styles.account}`}>
           <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />

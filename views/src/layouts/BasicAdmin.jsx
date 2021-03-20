@@ -7,7 +7,7 @@ import ProLayout, { DefaultFooter } from '@ant-design/pro-layout';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Link, useIntl, connect, history } from 'umi';
 import { GithubOutlined } from '@ant-design/icons';
-import { Result, Button } from 'antd';
+import { Result, Button, BackTop } from 'antd';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { getMatchMenu } from '@umijs/route-utils';
@@ -88,7 +88,6 @@ const BasicLayout = (props) => {
   const { formatMessage } = useIntl();
   return (
     <ProLayout
-
       logo={logo}
       formatMessage={formatMessage}
       {...props}
@@ -142,6 +141,7 @@ const BasicLayout = (props) => {
       <Authorized authority={authorized.authority} noMatch={noMatch}>
         {children}
       </Authorized>
+      <BackTop />
     </ProLayout>
   );
 };
