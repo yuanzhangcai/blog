@@ -1,6 +1,5 @@
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { Col, Row, Tooltip } from 'antd';
-import { FormattedMessage } from 'umi';
 import React from 'react';
 import numeral from 'numeral';
 import { ChartCard, Field } from './Charts';
@@ -23,14 +22,10 @@ const IntroduceRow = ({ loading }) => (
     <Col {...topColResponsiveProps}>
       <ChartCard
         bordered={false}
-        title={
-          <FormattedMessage id="dashboard.analysis.total-sales" defaultMessage="总销售额" />
-        }
+        title={"总销售额"}
         action={
           <Tooltip
-            title={
-              <FormattedMessage id="dashboard.analysis.introduce" defaultMessage="Introduce" />
-            }
+            title={"Introduce"}
           >
             <InfoCircleOutlined />
           </Tooltip>
@@ -39,9 +34,7 @@ const IntroduceRow = ({ loading }) => (
         total={numeral(18846).format('0,0')}
         footer={
           <Field
-            label={
-              <FormattedMessage id="dashboard.analysis.day-sales" defaultMessage="日销售额" />
-            }
+            label={"日销售额"}
             value={numeral(8846).format('0,0')}
           />
         }
@@ -53,11 +46,11 @@ const IntroduceRow = ({ loading }) => (
             marginRight: 16,
           }}
         >
-          <FormattedMessage id="dashboard.analysis.week" defaultMessage="周同比" />
+          周同比
           <span className={styles.trendText}>12%</span>
         </Trend>
         <Trend flag="down">
-          <FormattedMessage id="dashboard.analysis.day" defaultMessage="日同比" />
+          日同比
           <span className={styles.trendText}>11%</span>
         </Trend>
       </ChartCard>

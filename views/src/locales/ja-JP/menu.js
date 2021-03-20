@@ -56,4 +56,5 @@ export default {
   'menu.个人中心': '个人中心',
   'menu.用户': '用户',
   'menu.评论': '评论',
+  'menu.统计': '统计',
 };

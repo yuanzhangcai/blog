@@ -28,7 +28,7 @@ export default [
                 redirect: '/admin/dashboard',
               },
               {
-                name: 'home',
+                name: '统计',
                 icon: 'HomeOutlined',
                 path: '/admin/dashboard',
                 component: './Admin/Dashboard',
