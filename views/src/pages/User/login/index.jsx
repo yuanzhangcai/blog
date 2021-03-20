@@ -10,7 +10,7 @@ import {
 import { Alert, Tabs } from 'antd';
 import React, { useState } from 'react';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
-import { useIntl, connect, FormattedMessage } from 'umi';
+import { useIntl, connect, FormattedMessage, Link } from 'umi';
 import styles from './index.less';
 
 const LoginMessage = ({ content }) => (
@@ -223,10 +223,10 @@ const Login = (props) => {
             marginBottom: 24,
           }}
         >
-          {/* <ProFormCheckbox noStyle name="autoLogin">
-            <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
-          </ProFormCheckbox>
-          <a
+          <Link to="/user/register">
+            注册账户
+          </Link>
+          {/* <a
             style={{
               float: 'right',
             }}

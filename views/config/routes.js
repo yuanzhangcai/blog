@@ -12,6 +12,18 @@ export default [
             path: '/user/login',
             component: './User/login',
           },
+          {
+            name: '注册结果页',
+            icon: 'smile',
+            path: '/user/registerresult',
+            component: './User/RegisterResult',
+          },
+          {
+            name: '注册页',
+            icon: 'smile',
+            path: '/user/register',
+            component: './User/Register',
+          },
         ],
       },
       {

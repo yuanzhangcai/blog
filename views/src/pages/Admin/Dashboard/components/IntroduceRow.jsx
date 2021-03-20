@@ -22,10 +22,10 @@ const IntroduceRow = ({ loading }) => (
     <Col {...topColResponsiveProps}>
       <ChartCard
         bordered={false}
-        title={"总销售额"}
+        title={"访问总量"}
         action={
           <Tooltip
-            title={"Introduce"}
+            title={"访问总量"}
           >
             <InfoCircleOutlined />
           </Tooltip>

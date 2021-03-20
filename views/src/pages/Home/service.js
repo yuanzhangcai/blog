@@ -25,7 +25,7 @@ export async function queryCurrent() {
       },
       {
         key: '2',
-        label: '油腻大叔',
+        label: '精神小伙',
       },
       {
         key: '3',
