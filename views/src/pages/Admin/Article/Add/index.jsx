@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, Input, Form } from 'antd';
+import { Button, Card, Input, Form, Row, Col } from 'antd';
 import { PageContainer } from '@ant-design/pro-layout';
 import { connect } from 'umi';
 import styles from './index.less';
@@ -18,7 +18,7 @@ const formItemLayout = {
       span: 24,
     },
     sm: {
-      span: 7,
+      span: 2,
     },
   },
   wrapperCol: {
@@ -26,10 +26,10 @@ const formItemLayout = {
       span: 24,
     },
     sm: {
-      span: 12,
+      span: 22,
     },
     md: {
-      span: 10,
+      span: 22,
     },
   },
 };
@@ -48,7 +48,8 @@ const submitFormLayout = {
 
 class Add extends Component {
   formRef = React.createRef();
-  componentDidMount() {
+  txtRef = React.createRef();
+  async componentDidMount() {
     const { dispatch } = this.props;
     // dispatch({
     //   type: 'accountAndcenter/fetch',
@@ -60,12 +61,12 @@ class Add extends Component {
 
   onFinish = (values) => {
     const { dispatch } = this.props;
-    // this.formRef.current.setFieldsValue({
-    //   goal: 'Hi, man!',
-    // });
+    this.formRef.current.setFieldsValue({
+      goal: 'Hi, man!',
+    });
     values.context = this.state.editorState.toHTML()
-    alert(JSON.stringify(values))
-
+    // alert(JSON.stringify(values));
+    this.txtRef.current.innerHTML = values.context;
 
     dispatch({
       type: 'adminAndArticleAndAdd/fakeListForm',
@@ -87,15 +88,6 @@ class Add extends Component {
     // 创建一个空的editorState作为初始值
     editorState: BraftEditor.createEditorState(null)
   }
-
-  // async componentDidMount() {
-  //   // 假设此处从服务端获取html格式的编辑器内容
-  //   const htmlContent = await fetchEditorContent()
-  //   // 使用BraftEditor.createEditorState将html字符串转换为编辑器需要的editorStat
-  //   this.setState({
-  //     editorState: BraftEditor.createEditorState(htmlContent)
-  //   })
-  // }
 
   submitContent = async () => {
     // 在编辑器获得焦点时按下ctrl+s会执行此方法
@@ -162,13 +154,14 @@ class Add extends Component {
                 placeholder={"请输入内容"}
                 rows={4}
               /> */}
-              <div className="my-component">
+              <div className={styles.braft}>
                 <BraftEditor
-                    value={editorState}
-                    onChange={this.handleEditorChange}
-                    onSave={this.submitContent}
+                  value={editorState}
+                  onChange={this.handleEditorChange}
+                  onSave={this.submitContent}
+                  bordered={true}
                 />
-            </div>
+              </div>
             </FormItem>
             <FormItem
               {...submitFormLayout}
@@ -181,6 +174,13 @@ class Add extends Component {
               </Button>
             </FormItem>
           </Form>
+        </Card>
+        <Card>
+          <Row>
+            <Col>
+              <p ref={this.txtRef}></p>
+            </Col>
+          </Row>
         </Card>
       </PageContainer>
     );
