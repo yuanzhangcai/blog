@@ -24,6 +24,8 @@ CREATE TABLE `users` (
     `address` varchar(128) NOT NULL DEFAULT '' COMMENT '详细地址',
     `type` varchar(20) NOT NULL DEFAULT '1' COMMENT '用户类型：super:超级管理员；admin:管理员；user;',
     `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态：0：未激活；1：已激活；-1：已删除',
+    `create_time` datetime NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '创建时间',
+    `update_time` datetime NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '更新时间',
     PRIMARY KEY (`id`),
     UNIQUE KEY `k_email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';

@@ -42,16 +42,22 @@ const Register = ({ submitting, dispatch, userAndRegister }) => {
       return;
     }
 
-    const account = form.getFieldValue('mail');
-
-    if (userAndRegister.status === 'ok') {
-      message.success('注册成功！');
-      history.push({
-        pathname: '/user/registerresult',
-        state: {
-          account,
-        },
-      });
+    const account = form.getFieldValue('email');
+    //alert(JSON.stringify(userAndRegister))
+    if (userAndRegister.response) {
+      if (userAndRegister.response.ret === 0) {
+        userAndRegister.response = null
+        message.success('注册成功！');
+        history.push({
+          pathname: '/user/registerresult',
+          state: {
+            account,
+          },
+        });
+      } else {
+        message.error(userAndRegister.response.msg);
+      }
+      //userAndRegister = {}
     }
   }, [userAndRegister]);
   useEffect(
@@ -60,19 +66,6 @@ const Register = ({ submitting, dispatch, userAndRegister }) => {
     },
     [],
   );
-
-  const onGetCaptcha = () => {
-    let counts = 59;
-    setcount(counts);
-    interval = window.setInterval(() => {
-      counts -= 1;
-      setcount(counts);
-
-      if (counts === 0) {
-        clearInterval(interval);
-      }
-    }, 1000);
-  };
 
   const getPasswordStatus = () => {
     const value = form.getFieldValue('password');
@@ -161,7 +154,7 @@ const Register = ({ submitting, dispatch, userAndRegister }) => {
       </h3>
       <Form form={form} name="UserRegister" onFinish={onFinish}>
         <FormItem
-          name="mail"
+          name="email"
           rules={[
             {
               required: true,
@@ -175,7 +168,7 @@ const Register = ({ submitting, dispatch, userAndRegister }) => {
         >
           <Input
             size="large"
-            placeholder='邮箱'
+            placeholder='邮箱（必填）'
           />
         </FormItem>
         <FormItem
@@ -189,7 +182,7 @@ const Register = ({ submitting, dispatch, userAndRegister }) => {
         >
           <Input
             size="large"
-            placeholder='昵称'
+            placeholder='昵称（必填）'
           />
         </FormItem>
         <Popover
@@ -241,7 +234,7 @@ const Register = ({ submitting, dispatch, userAndRegister }) => {
             <Input
               size="large"
               type="password"
-              placeholder='至少6位密码，区分大小写'
+              placeholder='至少6位密码，区分大小写（必填）'
             />
           </FormItem>
         </Popover>
@@ -260,7 +253,7 @@ const Register = ({ submitting, dispatch, userAndRegister }) => {
           <Input
             size="large"
             type="password"
-            placeholder='确认密码'
+            placeholder='确认密码（必填）'
           />
         </FormItem>
         <InputGroup compact>
@@ -292,7 +285,7 @@ const Register = ({ submitting, dispatch, userAndRegister }) => {
           >
             <Input
               size="large"
-              placeholder='手机号'
+              placeholder='手机号（选填）'
             />
           </FormItem>
         </InputGroup>

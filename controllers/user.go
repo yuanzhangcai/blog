@@ -2,14 +2,18 @@ package controllers
 
 import (
 	"fmt"
+	"time"
 
-	"github.com/yuanzhangcai/chaos/controllers"
-	"github.com/yuanzhangcai/chaos/errors"
+	"github.com/sirupsen/logrus"
+	"github.com/yuanzhangcai/blog/errors"
+	"github.com/yuanzhangcai/blog/models"
+	cerrors "github.com/yuanzhangcai/chaos/errors"
+	cmodels "github.com/yuanzhangcai/chaos/models"
 )
 
 // UserCtl 微信公众号组件
 type UserCtl struct {
-	controllers.Controller
+	BaseCtl
 }
 
 // Message 根目录
@@ -72,6 +76,33 @@ func (c *UserCtl) Info() {
 	`)
 }
 
-func (c *UserCtl) Visit() {
-	c.Output(errors.OK)
+func (c *UserCtl) Register() {
+	params := &models.User{}
+	err := c.Ctx.ShouldBind(params)
+	if err != nil {
+		logrus.Error(err)
+		c.Output(cerrors.Wrap(errors.ErrParamsBind, err), nil)
+		return
+	}
+
+	model := models.NewUserModel()
+	_, err = model.GetInfo(&models.User{Email: params.Email})
+	if err == nil {
+		c.Output(errors.ErrUserEmailIsExist, nil)
+		return
+	}
+
+	params.CreateTime = cmodels.GormTime{Time: time.Now()}
+	params.UpdateTime = cmodels.GormTime{Time: time.Now()}
+	params.Type = models.UserTypeUser
+	params.Password = params.CreatePassword()
+
+	err = model.Add(params)
+	if err != nil {
+		logrus.Error(err)
+		c.Output(cerrors.Wrap(errors.ErrDBFailed, err), nil)
+		return
+	}
+
+	c.Output(errors.OK, nil)
 }

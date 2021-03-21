@@ -17,8 +17,11 @@ func SetRouters(router *gin.Engine) {
 
 	blog := router.Group("/blog")
 	{
-		// 兑换接口
+		// 获取帐户信息接口
 		services.HandleAll(blog, "/user/info", []string{http.MethodGet, http.MethodPost}, ctl, "Info")
-		services.HandleAll(blog, "/visit", []string{http.MethodGet, http.MethodPost}, ctl, "Visit")
+
+		// 帐户注册
+		services.HandleAll(blog, "/user/register", []string{http.MethodGet, http.MethodPost}, ctl, "Register")
+
 	}
 }

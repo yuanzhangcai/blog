@@ -3,8 +3,8 @@
 etcd_addrs= [] # etcd地址
 
 [db]
-list = ["db1"]
-db1 = "zacyuan:zacyuan@(mysql:3306)/blog?parseTime=true&loc=Local&charset=utf8"
+list = ["blog"]
+blog = "zacyuan:zacyuan@(mysql:3306)/blog?parseTime=true&loc=Local&charset=utf8"
 write_log = false # 数据库操作是否写日志。正式环境默认不写日志
 
 [redis]
