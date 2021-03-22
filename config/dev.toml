@@ -1,12 +1,15 @@
 # 本地开发环境下专用的配置文件
 [common]
 etcd_addrs= [] # etcd地址
+cookie_domain = "localhost"
+cookie_secure = false
+jwt_secret = "zacyuan_blog"
 
 [db]
 write_log = true # 数据库操作是否写日志。
 
 [log] # 日志相关配置
-filedir = "/Users/zacyuan/data/logs/blog" #日志文件路径
+filedir = "/Users/zacyuan/data/logs/blog/" #日志文件路径
 level = 5 #日志保存的时候的级别，默认是 Debug 级别
 
 [pprof]

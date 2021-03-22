@@ -7,6 +7,9 @@ server_name = "blog.zacyuan.cn" # 微服务名称
 etcd_addrs= [] # etcd地址
 register_interval = 15 # 服务注册间隔时间
 register_ttl = 30 # 服务失效时间
+cookie_domain = "zacyuan.cn"
+cookie_secure = true
+jwt_secret = ""
 
 [log] # 日志相关配置
 filedir = "/data/logs/blog/" #日志文件路径

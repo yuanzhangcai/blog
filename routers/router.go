@@ -6,15 +6,28 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/yuanzhangcai/blog/controllers"
+	"github.com/yuanzhangcai/chaos/common"
 	"github.com/yuanzhangcai/chaos/services"
 )
 
 // SetRouters 设置路径
 func SetRouters(router *gin.Engine) {
-	router.Use(cors.Default())
+
+	router.Static("/html", "/Users/zacyuan/MyStandy/blog/views/dist")
+	router.StaticFile("/", "/Users/zacyuan/MyStandy/blog/views/dist/index.html")
+	router.StaticFile("/index.html", "/Users/zacyuan/MyStandy/blog/views/dist/index.html")
+
+	if common.Env != common.EnvDev {
+		router.Use(cors.New(cors.Config{
+			AllowOrigins: []string{"https://www.zacyuan.cn"},
+			AllowMethods: []string{"GET", "POST"},
+			AllowHeaders: []string{"Origin", "Content-Length", "Content-Type"},
+		}))
+	} else {
+		router.Use(cors.Default())
+	}
 
 	ctl := &controllers.UserCtl{}
-
 	blog := router.Group("/blog")
 	{
 		// 获取帐户信息接口
@@ -22,6 +35,9 @@ func SetRouters(router *gin.Engine) {
 
 		// 帐户注册
 		services.HandleAll(blog, "/user/register", []string{http.MethodGet, http.MethodPost}, ctl, "Register")
+
+		// 帐户注册
+		services.HandleAll(blog, "/user/login", []string{http.MethodGet, http.MethodPost}, ctl, "Login")
 
 	}
 }

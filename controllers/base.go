@@ -5,6 +5,10 @@ import (
 	cerrors "github.com/yuanzhangcai/chaos/errors"
 )
 
+var (
+	tokenCookieName = "_t"
+)
+
 type BaseCtl struct {
 	controllers.Controller
 }

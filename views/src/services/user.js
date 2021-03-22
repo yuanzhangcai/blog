@@ -6,7 +6,7 @@ export async function queryCurrent() {
   // return request('/api/currentUser');
   return {
     name: '傲雨醉松',
-    avatar: './images/header.gif',
+    avatar: 'https://zacyuan.cn/images/header.gif',
     userid: '00000001',
     email: 'zacyuan@qq.com',
     signature: '不以物喜，不以己悲。。。',

@@ -15,6 +15,13 @@ var (
 
 	// ErrUserEmailIsExist 该邮箱已经被注册过了。
 	ErrUserEmailIsExist = errors.New(-200, "该邮箱已经被注册过了。")
+	// ErrUserEmailIsNotExist 账号尚未已注册。
+	ErrUserEmailIsNotExist = errors.New(-201, "账号尚未已注册。")
+	// ErrUserEmailOrPasswordIsNotRight
+	ErrUserEmailOrPasswordIsNotRight = errors.New(-202, "账号或密码不正确。")
+
+	// ErrGetToken 生成登录token失败。
+	ErrGetToken = errors.New(-997, "生成登录token失败。")
 
 	// ErrDBFailed 数据库操作失败。
 	ErrDBFailed = errors.New(-998, "数据库操作失败。")

@@ -1,6 +1,7 @@
 /** Request 网络请求工具 更详细的 api 文档: https://github.com/umijs/umi-request */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
+
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -41,9 +42,12 @@ const errorHandler = (error) => {
 };
 /** 配置request请求时的默认参数 */
 
+const baseUrl = REACT_APP_ENV != "prod" ? "http://localhost:9999/blog" : "https://www.zacyuan.cn/blog"
+
 const request = extend({
   errorHandler,
   // 默认错误处理
-  credentials: 'include', // 默认请求是否带上cookie
+  prefix : baseUrl,
+  // credentials: 'include', // 默认请求是否带上cookie
 });
 export default request;

@@ -1,14 +1,16 @@
 package controllers
 
 import (
-	"fmt"
 	"time"
 
+	"github.com/jinzhu/gorm"
 	"github.com/sirupsen/logrus"
+	"github.com/yuanzhangcai/blog/common"
 	"github.com/yuanzhangcai/blog/errors"
 	"github.com/yuanzhangcai/blog/models"
 	cerrors "github.com/yuanzhangcai/chaos/errors"
 	cmodels "github.com/yuanzhangcai/chaos/models"
+	"github.com/yuanzhangcai/config"
 )
 
 // UserCtl 微信公众号组件
@@ -18,18 +20,10 @@ type UserCtl struct {
 
 // Message 根目录
 func (c *UserCtl) Info() {
-	fmt.Println("user " + c.Params.Get("user"))
-	params := &struct {
-		User string `json:"user"`
-	}{}
-
-	err := c.Ctx.ShouldBind(&params)
-	fmt.Println(err, params)
-
 	c.Ctx.String(200, `
 	{
 		"name": "傲雨醉松",
-		"avatar": "./images/header.gif",
+		"avatar": "https://zacyuan.cn/images/header.gif",
 		"userid": "00000001",
 		"email": "zacyuan@qq.com",
 		"signature": "不以物喜，不以己悲。",
@@ -46,7 +40,7 @@ func (c *UserCtl) Info() {
 			},
 			{
 				"key": "2",
-				"label": "油腻大叔"
+				"label": "精神小伙"
 			},
 			{
 				"key": "3",
@@ -55,6 +49,14 @@ func (c *UserCtl) Info() {
 			{
 				"key": "4",
 				"label": "数码控"
+			},
+			{
+				"key": "5",
+				"label": "匠人"
+			},
+			{
+				"key": "6",
+				"label": "半栈"
 			}
 		],
 		"notifyCount": 12,
@@ -105,4 +107,50 @@ func (c *UserCtl) Register() {
 	}
 
 	c.Output(errors.OK, nil)
+}
+
+// Login 登录
+func (c *UserCtl) Login() {
+	params := &struct {
+		Email    string `json:"email" form:"email" binding:"required"`
+		Password string `json:"password" form:"password" binding:"required"`
+	}{}
+
+	err := c.Ctx.ShouldBind(params)
+	if err != nil {
+		logrus.Error(err)
+		c.Output(cerrors.Wrap(errors.ErrParamsBind, err), nil)
+		return
+	}
+
+	model := models.NewUserModel()
+	userInfo, err := model.GetInfo(&models.User{Email: params.Email})
+	if gorm.IsRecordNotFoundError(err) {
+		c.Output(errors.ErrUserEmailIsNotExist, nil)
+		return
+	} else if err != nil {
+		logrus.Error(err)
+		c.Output(cerrors.Wrap(errors.ErrDBFailed, err), nil)
+		return
+	}
+
+	temp := &models.User{Email: params.Email, Password: params.Password}
+	if userInfo.Password != temp.CreatePassword() {
+		c.Output(errors.ErrUserEmailOrPasswordIsNotRight, nil)
+		return
+	}
+
+	token, err := common.GenToken(userInfo.Email)
+	if err != nil {
+		c.Output(cerrors.Wrap(errors.ErrGetToken, err), nil)
+		return
+	}
+
+	c.Ctx.SetCookie("_t", token, 3*60*60, "/", config.GetString("common", "cookie_domain"), config.GetBool("common", "cookie_secure"), true)
+	c.Output(errors.OK, map[string]interface{}{"type": userInfo.Type})
+}
+
+// Logout 登出
+func (c *UserCtl) Logout() {
+
 }

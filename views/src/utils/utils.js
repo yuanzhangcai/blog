@@ -21,5 +21,3 @@ export const isAntDesignProOrDev = () => {
   return isAntDesignPro();
 };
 export const getPageQuery = () => parse(window.location.href.split('?')[1]);
-
-export const baseUrl = REACT_APP_ENV != "prod" ? "http://localhost:9999/blog" : "https://www.zacyuan.cn/blog"

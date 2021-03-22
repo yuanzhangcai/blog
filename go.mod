@@ -8,9 +8,11 @@ replace (
 )
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.6.3
 	github.com/jinzhu/gorm v1.9.16
-	github.com/sirupsen/logrus v1.8.0
-	github.com/yuanzhangcai/chaos v0.0.0-20210220111703-6f613a511b96
+	github.com/sirupsen/logrus v1.8.1
+	github.com/yuanzhangcai/chaos v0.0.0-20210322062033-e6c0a19b28da
+	github.com/yuanzhangcai/config v0.0.0-20200806074344-66e1e22e6731
 )
