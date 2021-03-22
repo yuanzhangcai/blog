@@ -8,7 +8,11 @@ import (
 	"github.com/yuanzhangcai/config"
 )
 
-const TokenExpireDuration = time.Hour * 2
+const (
+	TokenExpireDuration       = time.Hour * 3
+	TokenCookieExpireDuration = 3 * 60 * 60
+	TokenCookieName           = "_t"
+)
 
 type LoginClaims struct {
 	Email string `json:"email"`

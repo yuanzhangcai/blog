@@ -36,8 +36,10 @@ func SetRouters(router *gin.Engine) {
 		// 帐户注册
 		services.HandleAll(blog, "/user/register", []string{http.MethodGet, http.MethodPost}, ctl, "Register")
 
-		// 帐户注册
+		// 帐户登录
 		services.HandleAll(blog, "/user/login", []string{http.MethodGet, http.MethodPost}, ctl, "Login")
 
+		// 账户注销
+		services.HandleAll(blog, "/user/logout", []string{http.MethodGet, http.MethodPost}, ctl, "Logout")
 	}
 }

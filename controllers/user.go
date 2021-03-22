@@ -10,6 +10,7 @@ import (
 	"github.com/yuanzhangcai/blog/models"
 	cerrors "github.com/yuanzhangcai/chaos/errors"
 	cmodels "github.com/yuanzhangcai/chaos/models"
+	"github.com/yuanzhangcai/chaos/tools"
 	"github.com/yuanzhangcai/config"
 )
 
@@ -146,11 +147,26 @@ func (c *UserCtl) Login() {
 		return
 	}
 
-	c.Ctx.SetCookie("_t", token, 3*60*60, "/", config.GetString("common", "cookie_domain"), config.GetBool("common", "cookie_secure"), true)
+	c.Ctx.SetCookie(common.TokenCookieName, token, common.TokenCookieExpireDuration, "/",
+		config.GetString("common", "cookie_domain"), config.GetBool("common", "cookie_secure"), true)
 	c.Output(errors.OK, map[string]interface{}{"type": userInfo.Type})
 }
 
 // Logout 登出
 func (c *UserCtl) Logout() {
+	token, _ := c.Ctx.Cookie(common.TokenCookieName)
+	// if err != nil {
+	// 	logrus.Error(err)
+	// 	c.Output(cerrors.Wrap(errors.ErrGetCookie, err), nil)
+	// 	return
+	// }
 
+	if token != "" {
+		redis := tools.GetRedis()
+		_ = redis.Set(token, "1", common.TokenExpireDuration)
+		c.Ctx.SetCookie(common.TokenCookieName, "", -1, "/",
+			config.GetString("common", "cookie_domain"), config.GetBool("common", "cookie_secure"), true)
+	}
+
+	c.Output(errors.OK, nil)
 }

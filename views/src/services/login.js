@@ -4,12 +4,14 @@ export async function accountLogin(params) {
     method: 'POST',
     data: params,
   });
-  // return {
-  //   status: 'error',
-  //   type : 'account',
-  //   currentAuthority: 'guest',
-  // }
 }
+
+export async function accountLogout() {
+  return request('/user/logout', {
+    method: 'POST',
+  });
+}
+
 export async function getFakeCaptcha(mobile) {
   return request(`/api/login/captcha?mobile=${mobile}`);
 }

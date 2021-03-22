@@ -20,6 +20,9 @@ var (
 	// ErrUserEmailOrPasswordIsNotRight
 	ErrUserEmailOrPasswordIsNotRight = errors.New(-202, "账号或密码不正确。")
 
+	// ErrGetCookie 获取cookie失败。
+	ErrGetCookie = errors.New(-996, "获取cookie失败。")
+
 	// ErrGetToken 生成登录token失败。
 	ErrGetToken = errors.New(-997, "生成登录token失败。")
 
