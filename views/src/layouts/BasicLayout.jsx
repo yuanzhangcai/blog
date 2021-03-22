@@ -71,9 +71,6 @@ const BasicLayout = (props) => {
       dispatch({
         type: 'user/fetchCurrent',
       });
-      dispatch({
-        type: 'accountAndcenter/fetchCurrent',
-      });
     }
   }, []);
   /** Init variables */
@@ -288,9 +285,9 @@ const BasicLayout = (props) => {
   );
 };
 
-export default connect(({ global, settings, loading, accountAndcenter }) => ({
+export default connect(({ global, settings, loading, user }) => ({
   collapsed: global.collapsed,
   settings,
-  currentUser: accountAndcenter.currentUser,
-  currentUserLoading: loading.effects['accountAndcenter/fetchCurrent'],
+  currentUser: user.currentUser,
+  currentUserLoading: loading.effects['user/fetchCurrent'],
 }))(BasicLayout);

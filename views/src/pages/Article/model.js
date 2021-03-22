@@ -1,4 +1,4 @@
-import { queryCurrent, queryFakeList } from './service';
+import { queryFakeList } from './service';
 const Model = {
   namespace: 'article',
   state: {
@@ -6,14 +6,6 @@ const Model = {
     list: [],
   },
   effects: {
-    *fetchCurrent(_, { call, put }) {
-      const response = yield call(queryCurrent);
-      yield put({
-        type: 'saveCurrentUser',
-        payload: response,
-      });
-    },
-
     *fetch({ payload }, { call, put }) {
       const response = yield call(queryFakeList, payload);
       yield put({
@@ -23,10 +15,6 @@ const Model = {
     },
   },
   reducers: {
-    saveCurrentUser(state, action) {
-      return { ...state, currentUser: action.payload || {} };
-    },
-
     queryList(state, action) {
       return { ...state, list: action.payload };
     },
