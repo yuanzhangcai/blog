@@ -41,5 +41,8 @@ func SetRouters(router *gin.Engine) {
 
 		// 账户注销
 		services.HandleAll(blog, "/user/logout", []string{http.MethodGet, http.MethodPost}, ctl, "Logout")
+
+		// 检查登录状态
+		services.HandleAll(blog, "/user/getLoginUserInfo", []string{http.MethodGet, http.MethodPost}, ctl, "GetLoginUserInfo")
 	}
 }

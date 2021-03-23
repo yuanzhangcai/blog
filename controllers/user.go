@@ -149,17 +149,21 @@ func (c *UserCtl) Login() {
 
 	c.Ctx.SetCookie(common.TokenCookieName, token, common.TokenCookieExpireDuration, "/",
 		config.GetString("common", "cookie_domain"), config.GetBool("common", "cookie_secure"), true)
+
+	redis := tools.GetRedis()
+	oldToken := redis.Get(userInfo.Email)
+	if oldToken.Val() != "" {
+		// 将旧token置为无效
+		_ = redis.Set(oldToken.Val(), "1", common.TokenExpireDuration)
+	}
+	_ = redis.Set(userInfo.Email, token, common.TokenExpireDuration)
+
 	c.Output(errors.OK, map[string]interface{}{"type": userInfo.Type})
 }
 
 // Logout 登出
 func (c *UserCtl) Logout() {
 	token, _ := c.Ctx.Cookie(common.TokenCookieName)
-	// if err != nil {
-	// 	logrus.Error(err)
-	// 	c.Output(cerrors.Wrap(errors.ErrGetCookie, err), nil)
-	// 	return
-	// }
 
 	if token != "" {
 		redis := tools.GetRedis()
@@ -169,4 +173,31 @@ func (c *UserCtl) Logout() {
 	}
 
 	c.Output(errors.OK, nil)
+}
+
+func (c *UserCtl) GetLoginUserInfo() {
+	claims, err := c.checkLogin()
+	if err != nil {
+		c.Output(cerrors.Wrap(errors.ErrNoLogin, err), nil)
+		return
+	}
+
+	if claims == nil {
+		c.Output(errors.ErrNoLogin, nil)
+		return
+	}
+
+	params := &models.User{Email: claims.Email}
+	model := models.NewUserModel()
+	params, err = model.GetInfo(params)
+	if gorm.IsRecordNotFoundError(err) {
+		c.Output(errors.ErrNoLogin, nil)
+		return
+	} else if err != nil {
+		logrus.Error(err)
+		c.Output(cerrors.Wrap(errors.ErrDBFailed, err), nil)
+		return
+	}
+
+	c.Output(errors.OK, params)
 }

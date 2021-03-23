@@ -1,5 +1,5 @@
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Menu, Button} from 'antd';
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Menu, Button } from 'antd';
 import React from 'react';
 import { history, connect } from 'umi';
 import HeaderDropdown from '../HeaderDropdown';
@@ -40,35 +40,30 @@ class AvatarDropdown extends React.Component {
         avatar: '',
         name: '',
       },
-      menu,
+      loginUserInfo
     } = this.props;
     const menuHeaderDropdown = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
-        {currentUser.type == 99  && (
+        {loginUserInfo && loginUserInfo.ret == 0 && (loginUserInfo.data.type == "admin" || loginUserInfo.data.type == "super") && (
           <Menu.Item key="admin">
             <UserOutlined />
             管理端
           </Menu.Item>
         )}
-        {menu && (
-          <Menu.Item key="settings">
-            <SettingOutlined />
-            个人设置
-          </Menu.Item>
-        )}
-        {menu && <Menu.Divider />}
-
+        {loginUserInfo && loginUserInfo.ret == 0 && (loginUserInfo.data.type == "admin" || loginUserInfo.data.type == "super") &&
+          <Menu.Divider />
+        }
         <Menu.Item key="logout">
           <LogoutOutlined />
           退出登录
         </Menu.Item>
       </Menu>
     );
-    return currentUser && currentUser.name ? (
+    return loginUserInfo && loginUserInfo.ret == 0 ? (
       <HeaderDropdown overlay={menuHeaderDropdown}>
         <span className={`${styles.action} ${styles.account}`}>
-          <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
-          <span className={`${styles.name} anticon`}>{currentUser.name}</span>
+          <Avatar size="small" className={styles.avatar} src={loginUserInfo.data.avatar} alt="avatar" />
+          <span className={`${styles.name} anticon`}>{loginUserInfo.data.nickname}</span>
         </span>
       </HeaderDropdown>
     ) : (
@@ -88,4 +83,5 @@ class AvatarDropdown extends React.Component {
 
 export default connect(({ user }) => ({
   currentUser: user.currentUser,
+  loginUserInfo: user.loginUserInfo,
 }))(AvatarDropdown);

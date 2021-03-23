@@ -5,7 +5,7 @@
  */
 import ProLayout, { DefaultFooter } from '@ant-design/pro-layout';
 import React, { useEffect, useMemo, useRef } from 'react';
-import { Link, useIntl, connect, history } from 'umi';
+import { Link, useIntl, connect, history, Redirect } from 'umi';
 import { GithubOutlined } from '@ant-design/icons';
 import { Result, Button, BackTop } from 'antd';
 import Authorized from '@/utils/Authorized';
@@ -58,14 +58,15 @@ const BasicLayout = (props) => {
     location = {
       pathname: '/',
     },
+    loginUserInfo,
   } = props;
   const menuDataRef = useRef([]);
   useEffect(() => {
-    if (dispatch) {
-      dispatch({
-        type: 'user/fetchCurrent',
-      });
-    }
+    // if (dispatch) {
+    //   dispatch({
+    //     type: 'user/fetchCurrent',
+    //   });
+    // }
   }, []);
   /** Init variables */
 
@@ -86,67 +87,72 @@ const BasicLayout = (props) => {
     [location.pathname],
   );
   const { formatMessage } = useIntl();
-  return (
-    <ProLayout
-      logo={logo}
-      formatMessage={formatMessage}
-      {...props}
-      {...settings}
-      onCollapse={handleMenuCollapse}
-      onMenuHeaderClick={() => history.push('/')}
-      menuItemRender={(menuItemProps, defaultDom) => {
-        if (
-          menuItemProps.isUrl ||
-          !menuItemProps.path ||
-          location.pathname === menuItemProps.path
-        ) {
-          return defaultDom;
-        }
+  if (loginUserInfo && loginUserInfo.ret == 0 && (loginUserInfo.data.type == "admin" || loginUserInfo.data.type == "super")) {
+    return (
+      <ProLayout
+        logo={logo}
+        formatMessage={formatMessage}
+        {...props}
+        {...settings}
+        onCollapse={handleMenuCollapse}
+        onMenuHeaderClick={() => history.push('/')}
+        menuItemRender={(menuItemProps, defaultDom) => {
+          if (
+            menuItemProps.isUrl ||
+            !menuItemProps.path ||
+            location.pathname === menuItemProps.path
+          ) {
+            return defaultDom;
+          }
 
-        return <Link to={menuItemProps.path}>{defaultDom}</Link>;
-      }}
-      breadcrumbRender={(routers = []) => [
-        {
-          path: '/',
-          breadcrumbName: formatMessage({
-            id: 'menu.home',
-          }),
-        },
-        ...routers,
-      ]}
-      itemRender={(route, params, routes, paths) => {
-        const first = routes.indexOf(route) === 0;
-        return first ? (
-          <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
-        ) : (
-          <span>{route.breadcrumbName}</span>
-        );
-      }}
-      footerRender={() => {
-        if (settings.footerRender || settings.footerRender === undefined) {
-          return defaultFooterDom;
-        }
+          return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+        }}
+        breadcrumbRender={(routers = []) => [
+          {
+            path: '/',
+            breadcrumbName: formatMessage({
+              id: 'menu.home',
+            }),
+          },
+          ...routers,
+        ]}
+        itemRender={(route, params, routes, paths) => {
+          const first = routes.indexOf(route) === 0;
+          return first ? (
+            <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+          ) : (
+            <span>{route.breadcrumbName}</span>
+          );
+        }}
+        footerRender={() => {
+          if (settings.footerRender || settings.footerRender === undefined) {
+            return defaultFooterDom;
+          }
 
-        return null;
-      }}
-      menuDataRender={menuDataRender}
-      rightContentRender={() => <RightContent />}
-      postMenuData={(menuData) => {
-        menuDataRef.current = menuData || [];
-        return menuData || [];
-      }}
-      layout={"side"}
-      contentWidth={"Fluid"}
-    >
-      <Authorized authority={authorized.authority} noMatch={noMatch}>
-        {children}
-      </Authorized>
-      <BackTop />
-    </ProLayout>
-  );
+          return null;
+        }}
+        menuDataRender={menuDataRender}
+        rightContentRender={() => <RightContent />}
+        postMenuData={(menuData) => {
+          menuDataRef.current = menuData || [];
+          return menuData || [];
+        }}
+        layout={"side"}
+        contentWidth={"Fluid"}
+      >
+        <Authorized authority={authorized.authority} noMatch={noMatch}>
+          {children}
+        </Authorized>
+        <BackTop />
+      </ProLayout>
+    );
+  } else {
+    return <Redirect to={`/`} />;
+  }
 };
 
-export default connect(({ global, settings }) => ({
+export default connect(({ global, settings, user }) => ({
   collapsed: global.collapsed,
   settings,
+  loginUserInfo: user.loginUserInfo,
 }))(BasicLayout);

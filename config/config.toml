@@ -1,7 +1,7 @@
 #通用配置文件
 [common]
 app_desc = "blog"
-address = "0.0.0.0:9999" # gin web服务启动地址
+address = "127.0.0.1:9999" # gin web服务启动地址
 used_time = true # 是否启用耗时中间件，该中间件会记录请求耗时，请求参数，返回内容等信息，比较消耗性能，如果对性能要求较高的话，可以设为false
 server_name = "blog.zacyuan.cn" # 微服务名称
 etcd_addrs= [] # etcd地址
@@ -18,7 +18,7 @@ level = 4 # 日志保存的时候的级别，默认是 Info 级别
 report_caller = true # 日志中是否输出调用函数所在文件名，行号信息
 
 [monitor]
-server = ":8889" # prometheus曝露监控数据接口
+server = "127.0.0.1:8889" # prometheus曝露监控数据接口
 namespace = "zacyuan"
 subsystem = "webchat"
 

@@ -11,7 +11,3 @@ export async function accountLogout() {
     method: 'POST',
   });
 }
-
-export async function getFakeCaptcha(mobile) {
-  return request(`/api/login/captcha?mobile=${mobile}`);
-}

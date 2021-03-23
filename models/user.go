@@ -17,19 +17,19 @@ const (
 
 // User 用户表结构
 type User struct {
-	ID         uint64          `json:"id" form:"id" gorm:"primary_key"`
+	ID         uint64          `json:"-" form:"id" gorm:"primary_key"`
 	Email      string          `json:"email" form:"email" binding:"required"`
 	Nickname   string          `json:"nickname" form:"nickname" binding:"required"`
 	Avatar     string          `json:"avatar" form:"avatar"`
 	Signature  string          `json:"signature" form:"signature"`
-	Password   string          `json:"password" form:"password" binding:"required"`
-	Mobile     uint64          `json:"mobile" form:"mobile"`
+	Password   string          `json:"-" form:"password" binding:"required"`
+	Mobile     uint64          `json:"-" form:"mobile"`
 	Province   string          `json:"province" form:"province"`
-	Address    string          `json:"address" form:"address"`
+	Address    string          `json:"-" form:"address"`
 	Type       string          `json:"type" form:"type"`
 	Status     int             `json:"status" form:"status"`
-	CreateTime models.GormTime `json:"create_time"`
-	UpdateTime models.GormTime `json:"update_time"`
+	CreateTime models.GormTime `json:"-"`
+	UpdateTime models.GormTime `json:"-"`
 	Tags       []string        `json:"tags" gorm:"-"`
 }
 

@@ -8,6 +8,10 @@ export default [
         component: '../layouts/UserLayout',
         routes: [
           {
+            path: '/user',
+            redirect: '/user/login',
+          },
+          {
             name: 'login',
             path: '/user/login',
             component: './User/login',
@@ -23,6 +27,9 @@ export default [
             icon: 'smile',
             path: '/user/register',
             component: './User/Register',
+          },
+          {
+            component: './404',
           },
         ],
       },

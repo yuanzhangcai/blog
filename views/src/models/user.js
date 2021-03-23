@@ -1,4 +1,4 @@
-import { queryCurrent, query as queryUsers } from '@/services/user';
+import { queryCurrent, query as queryUsers, getLoginUserInfo } from '@/services/user';
 const UserModel = {
   namespace: 'user',
   state: {
@@ -20,10 +20,22 @@ const UserModel = {
         payload: response,
       });
     },
+
+    *fetchGetLoginUserInfo(_, { call, put }) {
+      const response = yield call(getLoginUserInfo);
+      yield put({
+        type: 'saveLoginUserInfo',
+        payload: response,
+      });
+    },
   },
   reducers: {
     saveCurrentUser(state, action) {
       return { ...state, currentUser: action.payload || {} };
+    },
+
+    saveLoginUserInfo(state, action) {
+      return { ...state, loginUserInfo: action.payload || nil};
     },
 
     changeNotifyCount(

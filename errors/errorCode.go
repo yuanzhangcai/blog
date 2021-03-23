@@ -21,13 +21,16 @@ var (
 	ErrUserEmailOrPasswordIsNotRight = errors.New(-202, "账号或密码不正确。")
 
 	// ErrGetCookie 获取cookie失败。
-	ErrGetCookie = errors.New(-996, "获取cookie失败。")
+	ErrGetCookie = errors.New(-995, "获取cookie失败。")
 
 	// ErrGetToken 生成登录token失败。
-	ErrGetToken = errors.New(-997, "生成登录token失败。")
+	ErrGetToken = errors.New(-996, "生成登录token失败。")
 
 	// ErrDBFailed 数据库操作失败。
-	ErrDBFailed = errors.New(-998, "数据库操作失败。")
+	ErrDBFailed = errors.New(-997, "数据库操作失败。")
+
+	// ErrNoLogin 没有登录。
+	ErrNoLogin = errors.New(-998, "没有登录。")
 
 	ErrSystem = errors.New(-999, "系统错误")
 )
