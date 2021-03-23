@@ -20,6 +20,9 @@ var (
 	// ErrUserEmailOrPasswordIsNotRight
 	ErrUserEmailOrPasswordIsNotRight = errors.New(-202, "账号或密码不正确。")
 
+	// ErrLoginLimit 您登录失败次数过多，请明天再来。
+	ErrLoginLimit = errors.New(-994, "您登录失败次数过多，请一个小时之后再来。")
+
 	// ErrGetCookie 获取cookie失败。
 	ErrGetCookie = errors.New(-995, "获取cookie失败。")
 

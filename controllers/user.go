@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -110,6 +111,14 @@ func (c *UserCtl) Register() {
 	c.Output(errors.OK, nil)
 }
 
+func (c *UserCtl) createTokenKey(email string) string {
+	return "token_" + email
+}
+
+func (c *UserCtl) createLoginFailedKey(email string) string {
+	return "login_failed_" + email
+}
+
 // Login 登录
 func (c *UserCtl) Login() {
 	params := &struct {
@@ -135,11 +144,25 @@ func (c *UserCtl) Login() {
 		return
 	}
 
-	temp := &models.User{Email: params.Email, Password: params.Password}
-	if userInfo.Password != temp.CreatePassword() {
-		c.Output(errors.ErrUserEmailOrPasswordIsNotRight, nil)
+	redis := tools.GetRedis()
+	key := c.createLoginFailedKey(params.Email)
+	count, _ := redis.Get(key).Int()
+	if count >= common.LoginFailedCountPreDay {
+		c.Output(errors.ErrLoginLimit, nil)
 		return
 	}
+
+	temp := &models.User{Email: params.Email, Password: params.Password}
+	if userInfo.Password != temp.CreatePassword() {
+
+		if count < common.LoginFailedCountPreDay {
+			_ = redis.Incr(key)
+			redis.Expire(key, time.Hour)
+		}
+		c.Output(cerrors.Wrap(errors.ErrUserEmailOrPasswordIsNotRight, fmt.Errorf("还剩%d次机会", common.LoginFailedCountPreDay-1-count)), nil)
+		return
+	}
+	_ = redis.Del(key)
 
 	token, err := common.GenToken(userInfo.Email)
 	if err != nil {
@@ -150,13 +173,13 @@ func (c *UserCtl) Login() {
 	c.Ctx.SetCookie(common.TokenCookieName, token, common.TokenCookieExpireDuration, "/",
 		config.GetString("common", "cookie_domain"), config.GetBool("common", "cookie_secure"), true)
 
-	redis := tools.GetRedis()
-	oldToken := redis.Get(userInfo.Email)
+	key = c.createTokenKey(userInfo.Email)
+	oldToken := redis.Get(key)
 	if oldToken.Val() != "" {
 		// 将旧token置为无效
 		_ = redis.Set(oldToken.Val(), "1", common.TokenExpireDuration)
 	}
-	_ = redis.Set(userInfo.Email, token, common.TokenExpireDuration)
+	_ = redis.Set(key, token, common.TokenExpireDuration)
 
 	c.Output(errors.OK, map[string]interface{}{"type": userInfo.Type})
 }

@@ -12,6 +12,7 @@ const (
 	TokenExpireDuration       = time.Hour * 3
 	TokenCookieExpireDuration = 3 * 60 * 60
 	TokenCookieName           = "_t"
+	LoginFailedCountPreDay    = 5 // 密码连续错误5次，限制一小时内不能登录
 )
 
 type LoginClaims struct {
