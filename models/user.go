@@ -41,7 +41,7 @@ func (c *User) CreatePassword() string {
 	return common.Md5Str(c.Email + "_" + c.Password + passwordSecret)
 }
 
-// UserModel 抽奖模块model
+// UserModel 用户model
 type UserModel struct {
 	models.Model
 }

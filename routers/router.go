@@ -27,22 +27,29 @@ func SetRouters(router *gin.Engine) {
 		router.Use(cors.Default())
 	}
 
-	ctl := &controllers.UserCtl{}
 	blog := router.Group("/blog")
 	{
-		// 获取帐户信息接口
-		services.HandleAll(blog, "/user/info", []string{http.MethodGet, http.MethodPost}, ctl, "Info")
+		{
+			ctl := &controllers.UserCtl{}
+			// 获取帐户信息接口
+			services.HandleAll(blog, "/user/info", []string{http.MethodGet, http.MethodPost}, ctl, "Info")
 
-		// 帐户注册
-		services.HandleAll(blog, "/user/register", []string{http.MethodGet, http.MethodPost}, ctl, "Register")
+			// 帐户注册
+			services.HandleAll(blog, "/user/register", []string{http.MethodGet, http.MethodPost}, ctl, "Register")
 
-		// 帐户登录
-		services.HandleAll(blog, "/user/login", []string{http.MethodGet, http.MethodPost}, ctl, "Login")
+			// 帐户登录
+			services.HandleAll(blog, "/user/login", []string{http.MethodGet, http.MethodPost}, ctl, "Login")
 
-		// 账户注销
-		services.HandleAll(blog, "/user/logout", []string{http.MethodGet, http.MethodPost}, ctl, "Logout")
+			// 账户注销
+			services.HandleAll(blog, "/user/logout", []string{http.MethodGet, http.MethodPost}, ctl, "Logout")
 
-		// 检查登录状态
-		services.HandleAll(blog, "/user/getLoginUserInfo", []string{http.MethodGet, http.MethodPost}, ctl, "GetLoginUserInfo")
+			// 检查登录状态
+			services.HandleAll(blog, "/user/getLoginUserInfo", []string{http.MethodGet, http.MethodPost}, ctl, "GetLoginUserInfo")
+		}
+
+		{
+			ctl := &controllers.VisitCtl{}
+			services.HandleAll(blog, "/visit", []string{http.MethodGet, http.MethodPost}, ctl, "Visit")
+		}
 	}
 }

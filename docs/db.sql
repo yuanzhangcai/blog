@@ -37,7 +37,7 @@ CREATE TABLE `tags` (
     PRIMARY KEY (`type`, `id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='标签表';
 
-CREATE TABLE `comment` (
+CREATE TABLE `comments` (
     `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     `article_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '文章ID',
     `user_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
@@ -48,8 +48,8 @@ CREATE TABLE `comment` (
     KEY `k_article` (`article_id`, `status`, `create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='评论表';
 
-CREATE TABLE `visit` (
-    `time` datetime NOT NULL DEFAULT '1000-01-01 00:00:00' COMMENT '时间',
+CREATE TABLE `visits` (
+    `time` varchar(32) NOT NULL DEFAULT '' COMMENT '时间',
     `count` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '次数',
     PRIMARY KEY (`time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='访问次数表';

@@ -14,7 +14,7 @@ import (
 	"github.com/yuanzhangcai/config"
 )
 
-// UserCtl 微信公众号组件
+// UserCtl 用户组件
 type UserCtl struct {
 	BaseCtl
 }
