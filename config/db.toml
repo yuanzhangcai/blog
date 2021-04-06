@@ -5,9 +5,9 @@ jwt_secret = ""
 
 [db]
 list = ["blog"]
-blog = "zacyuan:zacyuan@(mysql:3306)/blog?parseTime=true&loc=Local&charset=utf8"
+blog = "test:test@(blog-mysql:3306)/blog?parseTime=true&loc=Local&charset=utf8"
 write_log = false # 数据库操作是否写日志。正式环境默认不写日志
 
 [redis]
-server = "redis:6379"
+server = "blog-redis:6379"
 password = "12345678"
