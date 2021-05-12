@@ -1,13 +1,14 @@
 import {
   // AlipayCircleOutlined,
   LockOutlined,
+  GithubOutlined,
   // MailOutlined,
   // MobileOutlined,
   // TaobaoCircleOutlined,
   UserOutlined,
   // WeiboCircleOutlined,
 } from '@ant-design/icons';
-import { Alert, Tabs } from 'antd';
+import {Space, Alert, Tabs } from 'antd';
 import React, { useState } from 'react';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { useIntl, connect, FormattedMessage, Link } from 'umi';
@@ -235,12 +236,10 @@ const Login = (props) => {
           </a> */}
         </div>
       </ProForm>
-      {/* <Space className={styles.other}>
+      <Space className={styles.other}>
         <FormattedMessage id="pages.login.loginWith" defaultMessage="其他登录方式" />
-        <AlipayCircleOutlined className={styles.icon} />
-        <TaobaoCircleOutlined className={styles.icon} />
-        <WeiboCircleOutlined className={styles.icon} />
-      </Space> */}
+        <Link to="https://www.baidu.com"><GithubOutlined className={styles.icon}/></Link>
+      </Space>
     </div>
   );
 };

@@ -386,8 +386,8 @@ github.com/urfave/cli v1.20.0/go.mod h1:70zkFmudgCuE/ngEzBv17Jvp/497gISqfk5gWijb
 github.com/urfave/cli v1.22.1/go.mod h1:Gos4lmkARVdJ6EkW0WaNv/tZAAMe9V7XWyB60NtXRu0=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2 h1:eY9dn8+vbi4tKz5Qo6v2eYzo7kUS51QINcR5jNpbZS8=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
-github.com/yuanzhangcai/chaos v0.0.0-20210322062033-e6c0a19b28da h1:+5ICzx4RlPsnVkROTluEhhjD3A/rz1wamfHSDLokF6E=
-github.com/yuanzhangcai/chaos v0.0.0-20210322062033-e6c0a19b28da/go.mod h1:bSG/3x+NCwIHdXV79nSFJKaqAC+t12V5YlVHkqp+ZjY=
+github.com/yuanzhangcai/chaos v0.0.0-20210407122338-01b3e881bb7c h1:6qAQn916habGhKWQPG8HzY7jQB2tAy5ysIYFW6u4XSk=
+github.com/yuanzhangcai/chaos v0.0.0-20210407122338-01b3e881bb7c/go.mod h1:bSG/3x+NCwIHdXV79nSFJKaqAC+t12V5YlVHkqp+ZjY=
 github.com/yuanzhangcai/config v0.0.0-20200806074344-66e1e22e6731 h1:uzUk33z/Y0CUZf0eu+kXByJZCS5M43gIXJOabqp9pyg=
 github.com/yuanzhangcai/config v0.0.0-20200806074344-66e1e22e6731/go.mod h1:Rd0xTZgMcOD+uyzBBysfAwmEFkY4OsurzC7R+aGDcXM=
 github.com/yuanzhangcai/srsd v0.0.0-20200819035745-0388399ef1ba h1:inWJD++je9VQy89LYyeMJzqdkHcDYj8omfxzp4C/WpE=
